@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:#0b0d0e;
+  --panel:#111417;
+  --muted:#1a1e22;
+  --text:#d3d7db;
+  --accent:#5eead4;   /* teal */
+  --accent-2:#a78bfa; /* violet */
+}
+
+html, body, #root { height: 100%; background: var(--bg); color: var(--text); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid #1c2025;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-panel);
+}

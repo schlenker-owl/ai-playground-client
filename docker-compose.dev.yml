@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: ai-showcase-web:dev
+    container_name: ai-showcase-web-dev
+    ports:
+      - "5173:5173"
+    environment:
+      # Vite dev proxy target (see vite.config.ts)
+      # macOS/Windows Docker: host.docker.internal works out of the box
+      # Linux Docker: extra_hosts below maps host.docker.internal → host gateway
+      VITE_AI_SERVER_URL: "http://host.docker.internal:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/app
