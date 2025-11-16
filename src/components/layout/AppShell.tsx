@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
+import ServerStatusBadge from '../ServerStatusBadge';
 
 type NavItem = {
   to: string;
@@ -89,7 +90,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-        {/* Footer / route hint */}
+        {/* Footer / route hint + server status */}
         <div className="mt-6 pt-4 border-t border-edge text-[0.7rem] text-[#9aa3ab]">
           <div>
             Server: <code className="text-accent">/api</code>
@@ -98,12 +99,11 @@ export function AppShell({ children }: { children: ReactNode }) {
             Route:{' '}
             <span className="text-text/70">{location.pathname || '/'}</span>
           </div>
+          <ServerStatusBadge />
         </div>
       </aside>
 
-      <main className="p-8 space-y-8 overflow-y-auto">
-        {children}
-      </main>
+      <main className="p-8 space-y-8 overflow-y-auto">{children}</main>
     </div>
   );
 }
