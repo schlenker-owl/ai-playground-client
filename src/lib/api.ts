@@ -1,6 +1,5 @@
 // path: src/lib/api.ts
 // ---
-
 // If BASE is set, call the server directly; otherwise use the /api proxy.
 // src/lib/api.ts
 // All calls go to /api/** so we can proxy to ai-server in dev and nginx in prod.
@@ -48,7 +47,9 @@ export const api = {
       body: JSON.stringify(payload)
     }),
   jobStatus: (id: string) =>
-    jfetch<{ id: string; status: string; lines: string[] }>(`/jobs/${id}`)
+    jfetch<{ id: string; status: string; lines: string[]; output_dir?: string }>(
+      `/jobs/${id}`
+    )
 };
 
 // --- CV API client ---
