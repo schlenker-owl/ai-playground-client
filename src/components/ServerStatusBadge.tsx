@@ -1,30 +1,44 @@
 // path: src/components/ServerStatusBadge.tsx
 // ---
-import { clsx } from 'clsx';
-import { useServerStatus } from '../hooks/useServerStatus';
+import { ServerStatus } from '../hooks/useServerMeta';
 
-export default function ServerStatusBadge() {
-  const status = useServerStatus();
+type Props = {
+  status: ServerStatus;
+  className?: string;
+};
 
+export default function ServerStatusBadge({ status, className }: Props) {
   const label =
     status === 'checking'
       ? 'Checking…'
+      : status === 'starting'
+      ? 'Starting…'
       : status === 'online'
       ? 'Online'
       : 'Offline';
 
-  const dotClass = clsx(
-    'inline-flex h-2.5 w-2.5 rounded-full',
-    status === 'checking' && 'bg-yellow-400/70 animate-pulse',
-    status === 'online' && 'bg-emerald-400',
-    status === 'offline' && 'bg-red-500'
-  );
+  const dotColor =
+    status === 'checking'
+      ? 'bg-yellow-400/80 animate-pulse'
+      : status === 'starting'
+      ? 'bg-yellow-400/80'
+      : status === 'online'
+      ? 'bg-emerald-400'
+      : 'bg-red-500';
 
   return (
-    <div className="mt-2 flex items-center gap-2 text-xs text-[#9aa3ab]">
-      <span className={dotClass} />
+    <div
+      className={
+        className ??
+        'mt-2 flex items-center gap-2 text-[0.7rem] text-[#9aa3ab]'
+      }
+    >
+      <span className={`inline-flex h-2.5 w-2.5 rounded-full ${dotColor}`} />
       <span>
-        AI server: <span className="text-text/80">{label}</span>
+        AI server:{' '}
+        <span className="text-text/80">
+          {label}
+        </span>
       </span>
     </div>
   );

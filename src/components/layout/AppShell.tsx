@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
 import ServerStatusBadge from '../ServerStatusBadge';
+import { useServerMeta } from '../../hooks/useServerMeta';
 
 type NavItem = {
   to: string;
@@ -44,6 +45,14 @@ const NAV_SECTIONS: NavSection[] = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
+  const { status, meta } = useServerMeta();
+
+  const modelLabel =
+    meta?.modelId && meta?.usingLora
+      ? `${meta.modelId} + LoRA`
+      : meta?.modelId ?? '—';
+
+  const deviceLabel = meta?.device ?? '—';
 
   return (
     <div className="min-h-full grid grid-cols-[260px_1fr]">
@@ -57,7 +66,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             AI <span className="text-accent">Showcase</span>
           </div>
           <p className="mt-2 text-xs text-[#9aa3ab]">
-            Run, train, and inspect local LLM & CV pipelines.
+            Run, train, and inspect local LLM &amp; CV pipelines.
           </p>
         </div>
 
@@ -91,15 +100,35 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
 
         {/* Footer / route hint + server status */}
-        <div className="mt-6 pt-4 border-t border-edge text-[0.7rem] text-[#9aa3ab]">
+        <div className="mt-6 pt-4 border-t border-edge text-[0.7rem] text-[#9aa3ab] space-y-1">
           <div>
-            Server: <code className="text-accent">/api</code>
+            API base:{' '}
+            <code className="text-accent">/api</code>
           </div>
-          <div className="mt-1 truncate">
+
+          {meta && (
+            <div className="space-y-0.5">
+              <div>
+                Model:{' '}
+                <span className="text-text/80">
+                  {modelLabel}
+                </span>
+              </div>
+              <div>
+                Device:{' '}
+                <span className="text-text/80 uppercase">
+                  {deviceLabel}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <div className="truncate">
             Route:{' '}
             <span className="text-text/70">{location.pathname || '/'}</span>
           </div>
-          <ServerStatusBadge />
+
+          <ServerStatusBadge status={status} />
         </div>
       </aside>
 
