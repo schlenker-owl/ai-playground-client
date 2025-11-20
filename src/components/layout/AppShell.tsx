@@ -23,7 +23,7 @@ const NAV_SECTIONS: NavSection[] = [
       { to: '/', label: 'Overview' },
       { to: '/chat', label: 'LLM Chat' },
       { to: '/cv', label: 'Vision Hub' },
-      { to: '/diffusion', label: 'Diffusion (soon)' },
+      { to: '/diffusion', label: 'Diffusion' },
     ],
   },
   {
